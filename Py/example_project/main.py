@@ -6,6 +6,7 @@ numbers = []
 total_score = 0
 max_score = 0
 min_score = 0
+avg = 0
 
 @app.route('/')
 def home():
@@ -13,11 +14,11 @@ def home():
 
 @app.route('/result')
 def number():
-    return render_template('result.html', total_score=total_score, max_score=max_score, min_score=min_score)
+    return render_template('result.html', total_score=total_score, max_score=max_score, min_score=min_score,avg = avg)
 
 @app.route('/result', methods=['POST'])
 def sign():
-    global  total_score,max_score, min_score
+    global  total_score,max_score, min_score,avg
 
     #total_score = 0
     ko = int(request.form.get("ko", 0))
@@ -27,6 +28,9 @@ def sign():
     current_total = ko + math + eng
     current_max = max(ko, math, eng)
     current_min = min(ko, math, eng)
+    avg = current_total/3
+    print(current_total)
+    print(avg)
     
     total_score = current_total
     if current_max > max_score:
